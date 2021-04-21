@@ -163,6 +163,7 @@ extension Lambda {
         let traceID: String
         let clientContext: String?
         let cognitoIdentity: String?
+        let allHeaders: String?
 
         init(headers: HTTPHeaders) throws {
             guard let requestID = headers.first(name: AmazonHeaders.requestID), !requestID.isEmpty else {
@@ -189,6 +190,7 @@ extension Lambda {
             self.traceID = traceID
             self.clientContext = headers["Lambda-Runtime-Client-Context"].first
             self.cognitoIdentity = headers["Lambda-Runtime-Cognito-Identity"].first
+            self.allHeaders = headers.description
         }
     }
 }

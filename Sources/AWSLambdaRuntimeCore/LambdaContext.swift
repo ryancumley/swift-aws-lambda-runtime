@@ -83,6 +83,8 @@ extension Lambda {
         /// `ByteBufferAllocator` to allocate `ByteBuffer`
         /// This is useful when implementing `EventLoopLambdaHandler`
         public let allocator: ByteBufferAllocator
+        
+        public let allHeaders: String?
 
         internal init(requestID: String,
                       traceID: String,
@@ -92,7 +94,8 @@ extension Lambda {
                       clientContext: String? = nil,
                       logger: Logger,
                       eventLoop: EventLoop,
-                      allocator: ByteBufferAllocator)
+                      allocator: ByteBufferAllocator,
+                      allHeaders: String? = nil)
         {
             self.requestID = requestID
             self.traceID = traceID
@@ -103,6 +106,7 @@ extension Lambda {
             // utility
             self.eventLoop = eventLoop
             self.allocator = allocator
+            self.allHeaders = allHeaders
             // mutate logger with context
             var logger = logger
             logger[metadataKey: "awsRequestID"] = .string(requestID)
@@ -119,7 +123,7 @@ extension Lambda {
         }
 
         public var debugDescription: String {
-            "\(Self.self)(requestID: \(self.requestID), traceID: \(self.traceID), invokedFunctionARN: \(self.invokedFunctionARN), cognitoIdentity: \(self.cognitoIdentity ?? "nil"), clientContext: \(self.clientContext ?? "nil"), deadline: \(self.deadline))"
+            "\(Self.self)(requestID: \(self.requestID), traceID: \(self.traceID), invokedFunctionARN: \(self.invokedFunctionARN), cognitoIdentity: \(self.cognitoIdentity ?? "nil"), clientContext: \(self.clientContext ?? "nil"), deadline: \(self.deadline), allHeaders: \(self.allHeaders ?? "nil")"
         }
     }
 }

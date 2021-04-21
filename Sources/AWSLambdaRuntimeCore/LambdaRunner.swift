@@ -110,7 +110,8 @@ extension Lambda.Context {
                   clientContext: invocation.clientContext,
                   logger: logger,
                   eventLoop: eventLoop,
-                  allocator: allocator)
+                  allocator: allocator,
+                  allHeaders: invocation.allHeaders)
     }
 }
 
